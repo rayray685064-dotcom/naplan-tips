@@ -1,273 +1,238 @@
-import React, { useState } from 'react';
-import { 
-  Pencil, 
-  Lightbulb, 
-  CheckCircle2, 
-  BookOpen, 
-  Search, 
-  Ear, 
-  Calculator, 
-  Brain, 
-  Heart,
-  ChevronLeft,
-  ChevronRight,
-  Sparkles
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAPLAN Kids Tips - Chelsey & Candice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Quicksand', sans-serif; }
+        .slide-enter { animation: slideIn 0.5s ease-out forwards; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .bg-pattern {
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 bg-pattern min-h-screen flex items-center justify-center p-4">
 
-const App = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  const slides = [
-    {
-      titleEn: "NAPLAN Success Secrets!",
-      titleCn: "NAPLAN 拿分小秘密",
-      icon: <Sparkles className="w-16 h-16 text-yellow-400" />,
-      color: "bg-blue-50",
-      content: (
-        <div className="text-center space-y-4">
-          <p className="text-2xl font-bold text-blue-600">Let's get ready for the big day!</p>
-          <p className="text-xl text-slate-600">让我们一起为考试做好准备吧！</p>
-          <div className="mt-8 p-4 bg-white/60 rounded-2xl shadow-sm inline-block">
-            <p className="text-sm text-slate-400 italic">Created for Chelsey & Candice</p>
-          </div>
-        </div>
-      )
-    },
-    {
-      titleEn: "1. Plan Your Story",
-      titleCn: "1. 写作前先构思",
-      icon: <Pencil className="w-16 h-16 text-orange-400" />,
-      color: "bg-orange-50",
-      content: (
-        <div className="space-y-6">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white p-4 rounded-xl shadow-md border-l-4 border-orange-400">
-              <h3 className="font-bold text-orange-600 mb-2">English</h3>
-              <p className="text-sm">Spend 5 minutes planning! Beginning, Middle, and Ending.</p>
-            </div>
-            <div className="bg-white p-4 rounded-xl shadow-md border-l-4 border-orange-400">
-              <h3 className="font-bold text-orange-600 mb-2">中文</h3>
-              <p className="text-sm">花5分钟构思！写下开头、中间和结尾，文章更有条理。</p>
-            </div>
-          </div>
-        </div>
-      )
-    },
-    {
-      titleEn: "2. Use Juicy Words",
-      titleCn: "2. 使用生动的词汇",
-      icon: <Lightbulb className="w-16 h-16 text-yellow-500" />,
-      color: "bg-yellow-50",
-      content: (
-        <div className="space-y-4">
-          <p className="text-center font-medium">Swap boring words for exciting ones!</p>
-          <div className="flex justify-around items-center bg-white p-6 rounded-2xl shadow-inner border-2 border-yellow-100">
-            <div className="text-center">
-              <span className="text-slate-400 line-through text-lg block">big</span>
-              <span className="text-green-600 font-black text-2xl">gigantic</span>
-            </div>
-            <div className="text-4xl">➡️</div>
-            <div className="text-center">
-              <span className="text-slate-400 line-through text-lg block">good</span>
-              <span className="text-green-600 font-black text-2xl">fantastic</span>
-            </div>
-          </div>
-        </div>
-      )
-    },
-    {
-      titleEn: "3. The 5-Minute Check",
-      titleCn: "3. 最后5分钟检查",
-      icon: <CheckCircle2 className="w-16 h-16 text-green-500" />,
-      color: "bg-green-50",
-      content: (
-        <div className="space-y-4">
-          <div className="bg-white p-6 rounded-2xl shadow-md border-2 border-green-100">
-            <ul className="space-y-3">
-              <li className="flex items-center gap-3 text-lg font-bold text-slate-700">✅ Spelling (拼写)</li>
-              <li className="flex items-center gap-3 text-lg font-bold text-slate-700">✅ Capitals (大写)</li>
-              <li className="flex items-center gap-3 text-lg font-bold text-slate-700">✅ Stops (句号)</li>
-            </ul>
-          </div>
-          <p className="text-center text-red-500 font-black animate-pulse">Don't let small mistakes steal marks!</p>
-        </div>
-      )
-    },
-    {
-      titleEn: "4. Question First!",
-      titleCn: "4. 先看题目",
-      icon: <BookOpen className="w-16 h-16 text-purple-500" />,
-      color: "bg-purple-50",
-      content: (
-        <div className="text-center space-y-4">
-          <p className="text-xl">Read questions <span className="font-black text-purple-600 underline text-2xl italic">BEFORE</span> text.</p>
-          <p className="text-lg text-slate-600 font-bold">先看题目，再读文章。</p>
-        </div>
-      )
-    },
-    {
-      titleEn: "5. Find the Evidence",
-      titleCn: "5. 寻找证据",
-      icon: <Search className="w-16 h-16 text-indigo-500" />,
-      color: "bg-indigo-50",
-      content: (
-        <div className="space-y-4 px-6">
-          <p className="text-center font-bold">Answers are hiding inside! 🔍</p>
-          <div className="space-y-2">
-            {["Title 标题", "First Sentence 第一句", "Last Sentence 最后一句"].map((t, i) => (
-              <div key={i} className="bg-white p-3 rounded-xl shadow-sm border border-indigo-100 flex justify-between px-6">
-                <span className="font-black text-indigo-600">{t.split(' ')[0]}</span>
-                <span className="text-slate-500 font-bold">{t.split(' ')[1]}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )
-    },
-    {
-      titleEn: "6. Listen in Your Head",
-      titleCn: "6. 在心里读一遍",
-      icon: <Ear className="w-16 h-16 text-pink-500" />,
-      color: "bg-pink-50",
-      content: (
-        <div className="text-center space-y-6">
-          <p className="text-xl font-bold">Does it sound "right"?</p>
-          <div className="flex justify-center">
-            <div className="bg-white p-8 rounded-full shadow-xl border-4 border-white animate-bounce">
-              <span className="text-4xl">👂✨</span>
-            </div>
-          </div>
-          <p className="text-slate-600 font-bold italic">读出来，错误就藏不住了！</p>
-        </div>
-      )
-    },
-    {
-      titleEn: "7. Read Twice!",
-      titleCn: "7. 读两遍，防粗心",
-      icon: <Calculator className="w-16 h-16 text-rose-500" />,
-      color: "bg-rose-50",
-      content: (
-        <div className="space-y-4 px-6">
-          <p className="font-black text-center text-rose-600 text-xl">Sneaky Words Warning! ⚠️</p>
-          <div className="bg-white p-4 rounded-xl grid grid-cols-3 gap-2 text-center border-2 border-rose-100">
-            <div><p className="font-black text-rose-600 text-lg">Least</p><p className="text-xs">最少</p></div>
-            <div><p className="font-black text-rose-600 text-lg">Total</p><p className="text-xs">总数</p></div>
-            <div><p className="font-black text-rose-600 text-lg">Diff</p><p className="text-xs">差</p></div>
-          </div>
-          <p className="text-sm text-center font-bold italic">Slow down to win! 慢慢读。</p>
-        </div>
-      )
-    },
-    {
-      titleEn: "8. Scribble & Solve",
-      titleCn: "8. 动笔算，更保险",
-      icon: <Brain className="w-16 h-16 text-teal-500" />,
-      color: "bg-teal-50",
-      content: (
-        <div className="text-center space-y-4 px-6">
-          <p className="text-xl font-bold">Use your scrap paper!</p>
-          <div className="bg-white p-6 rounded-2xl border-2 border-teal-200 -rotate-2 shadow-lg">
-            <p className="text-3xl font-mono font-black text-teal-600">124 + 56 = 180</p>
-          </div>
-          <p className="text-slate-600 font-bold italic">写下来，更保险！</p>
-        </div>
-      )
-    },
-    {
-      titleEn: "9. Keep Calm!",
-      titleCn: "9. 保持冷静",
-      icon: <Heart className="w-16 h-16 text-red-400" />,
-      color: "bg-red-50",
-      content: (
-        <div className="text-center space-y-6">
-          <div className="flex justify-center gap-4">
-            <div className="bg-white p-4 rounded-2xl shadow-md border-b-4 border-blue-400">😴<br/><span className="text-xs font-bold">SLEEP</span></div>
-            <div className="bg-white p-4 rounded-2xl shadow-md border-b-4 border-orange-400">🍳<br/><span className="text-xs font-bold">EAT</span></div>
-            <div className="bg-white p-4 rounded-2xl shadow-md border-b-4 border-green-400">🧘<br/><span className="text-xs font-bold">CALM</span></div>
-          </div>
-          <p className="text-lg font-black text-slate-700 leading-tight">
-            You are amazing! Go get 'em!
-          </p>
-          <p className="text-slate-500 font-bold">你是最棒的，加油！</p>
-        </div>
-      )
-    }
-  ];
-
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-
-  return (
-    <div className="min-h-screen bg-slate-300 flex items-center justify-center p-4 font-sans select-none">
-      <div className={`w-full max-w-2xl aspect-[4/3] ${slides[currentSlide].color} rounded-[3.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.2)] overflow-hidden transition-colors duration-700 flex flex-col relative border-[16px] border-white`}>
+    <div id="deck" class="w-full max-w-4xl min-h-[550px] rounded-[2.5rem] shadow-2xl transition-all duration-500 flex flex-col overflow-hidden relative border-8 border-white">
         
-        {/* Top Progress Bar */}
-        <div className="h-4 w-full bg-black/5 relative z-10">
-          <div 
-            className="h-full bg-black/10 transition-all duration-700 ease-in-out" 
-            style={{ width: `${((currentSlide + 1) / slides.length) * 100}%` }}
-          />
+        <div class="p-6 flex justify-between items-center bg-white/40 backdrop-blur-sm">
+            <span id="category-badge" class="px-5 py-1.5 bg-white rounded-full text-sm font-bold tracking-widest uppercase shadow-sm border border-gray-100">
+                LOADING...
+            </span>
+            <span id="page-counter" class="text-sm font-bold text-gray-400">0 / 0</span>
         </div>
 
-        {/* Content Area */}
-        <div className="flex-1 p-8 flex flex-col items-center justify-center text-slate-800">
-          <div className="mb-4 transform scale-110">
-            {slides[currentSlide].icon}
-          </div>
-          
-          <div className="text-center mb-6">
-            <h1 className="text-3xl md:text-5xl font-black mb-2 tracking-tight text-slate-900 leading-tight">
-              {slides[currentSlide].titleEn}
-            </h1>
-            <h2 className="text-xl md:text-2xl font-bold text-slate-500/80">
-              {slides[currentSlide].titleCn}
-            </h2>
-          </div>
+        <div class="flex-1 flex flex-col items-center justify-center text-center px-8 pb-12">
+            <div id="icon-container" class="text-7xl mb-6 transform transition-transform hover:scale-110 cursor-pointer">
+                🚀
+            </div>
+            
+            <div id="content-box" class="slide-enter">
+                <h1 id="title-en" class="text-4xl md:text-5xl font-black mb-2 text-gray-900 leading-tight">Title English</h1>
+                <h2 id="title-cn" class="text-3xl md:text-4xl font-bold mb-8 text-blue-600">中文标题</h2>
 
-          <div className="w-full max-w-sm">
-            {slides[currentSlide].content}
-          </div>
+                <div class="max-w-2xl mx-auto space-y-4">
+                    <p id="desc-en" class="text-xl md:text-2xl font-medium text-gray-800 leading-relaxed"></p>
+                    <p id="desc-cn" class="text-lg md:text-xl text-gray-500"></p>
+                    
+                    <div id="extra-content" class="pt-6 flex flex-wrap justify-center gap-3"></div>
+                </div>
+            </div>
         </div>
 
-        {/* PAGE INDICATOR DOTS */}
-        <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2 pointer-events-none">
-          {slides.map((_, i) => (
-            <div key={i} className={`h-2 rounded-full transition-all duration-300 ${i === currentSlide ? 'w-8 bg-black/30' : 'w-2 bg-black/10'}`} />
-          ))}
+        <div class="p-8 flex justify-between items-center bg-white/20 backdrop-blur-md">
+            <button onclick="prevSlide()" class="p-4 rounded-full bg-white/50 hover:bg-white transition-all shadow-md group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            
+            <div id="dots" class="hidden md:flex gap-2"></div>
+
+            <button onclick="nextSlide()" class="flex items-center gap-3 bg-gray-900 text-white px-10 py-4 rounded-3xl font-bold hover:bg-black transition-all shadow-xl hover:scale-105 active:scale-95">
+                <span id="next-btn-text">NEXT</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
         </div>
-
-        {/* --- NEW SIDE NAVIGATION BUTTONS --- */}
-        
-        {/* LEFT BUTTON ZONE */}
-        <button 
-          onClick={prevSlide}
-          disabled={currentSlide === 0}
-          className={`absolute left-0 top-4 bottom-4 w-24 md:w-32 flex items-center justify-center group transition-all ${
-            currentSlide === 0 ? 'opacity-0 cursor-default' : 'hover:bg-black/5 active:bg-black/10'
-          }`}
-        >
-          <div className="p-3 rounded-full bg-black/5 group-hover:bg-black/10 text-black/20 group-hover:text-black/40 transition-all transform group-hover:-translate-x-1">
-            <ChevronLeft size={64} strokeWidth={3} />
-          </div>
-        </button>
-
-        {/* RIGHT BUTTON ZONE */}
-        <button 
-          onClick={nextSlide}
-          className="absolute right-0 top-4 bottom-4 w-24 md:w-32 flex items-center justify-center group transition-all hover:bg-black/5 active:bg-black/10"
-        >
-          <div className="p-3 rounded-full bg-black/5 group-hover:bg-black/10 text-black/20 group-hover:text-black/40 transition-all transform group-hover:translate-x-1">
-            <ChevronRight size={64} strokeWidth={3} />
-          </div>
-        </button>
-
-        {/* Decorative Sparkles */}
-        <div className="absolute top-12 left-12 opacity-5 animate-pulse pointer-events-none">
-          <Sparkles size={80} />
-        </div>
-      </div>
     </div>
-  );
-};
 
-export default App;
+    <script>
+        const slides = [
+            {
+                category: "Welcome 欢迎",
+                en: "Super NAPLAN Tips!",
+                cn: "NAPLAN 考试小秘籍",
+                desc_en: "Let's learn how to do our best today!",
+                desc_cn: "Chelsey & Candice，让我们一起加油！",
+                icon: "🌟",
+                color: "#FEF3C7", // Yellow
+                extra: ["Ready?", "Go!"]
+            },
+            {
+                category: "Writing 写作",
+                en: "Plan First",
+                cn: "写作前先构思",
+                desc_en: "Spend 5 minutes planning your ideas.",
+                desc_cn: "想好你的：开头、中间、结尾。",
+                icon: "📝",
+                color: "#DBEAFE", // Blue
+                extra: ["🏠 Beginning", "📖 Middle", "🏁 Ending"]
+            },
+            {
+                category: "Writing 写作",
+                en: "Strong Vocabulary",
+                cn: "使用生动的词汇",
+                desc_en: "Better words give you higher marks!",
+                desc_cn: "用更高级的词，让文章变精彩。",
+                icon: "🌈",
+                color: "#DBEAFE",
+                extra: ["Big ➔ Gigantic ✨", "Good ➔ Fantastic ✨"]
+            },
+            {
+                category: "Writing 写作",
+                en: "Check Your Work",
+                cn: "最后 5 分钟检查",
+                desc_en: "Look for spelling and full stops.",
+                desc_cn: "检查拼写、大写字母和句号。",
+                icon: "🔍",
+                color: "#D1FAE5", // Green
+                extra: ["Spelling", "A B C", ". ? !"]
+            },
+            {
+                category: "Reading 阅读",
+                en: "Questions First",
+                cn: "先看题目，再看文章",
+                desc_en: "It tells you what information to look for.",
+                desc_cn: "带着问题去找答案，速度更快！",
+                icon: "📖",
+                color: "#ECFDF5", // Emerald
+                extra: ["Read Qs ➔ Read Text"]
+            },
+            {
+                category: "Reading 阅读",
+                en: "Find Evidence",
+                cn: "在文章里找证据",
+                desc_en: "Answers are usually in the text.",
+                desc_cn: "重点看：标题、第一段、最后一段。",
+                icon: "📍",
+                color: "#ECFDF5",
+                extra: ["Title", "First Sentence", "Last Sentence"]
+            },
+            {
+                category: "Grammar 语法",
+                en: "Listen in Your Head",
+                cn: "在心里读一遍",
+                desc_en: "Your ear can often hear mistakes.",
+                desc_cn: "读出声（在心里），错误藏不住。",
+                icon: "🎧",
+                color: "#F3E8FF", // Purple
+                extra: ["Does it sound right?"]
+            },
+            {
+                category: "Numeracy 数学",
+                en: "Read Twice",
+                cn: "题目读两遍",
+                desc_en: "Look for key words like Least, Total, Difference.",
+                desc_cn: "别粗心！圈出关键词。",
+                icon: "🔢",
+                color: "#FFEDD5", // Orange
+                extra: ["Least (最少)", "Total (总数)", "Diff (差)"]
+            },
+            {
+                category: "Numeracy 数学",
+                en: "Show Your Thinking",
+                cn: "写出计算步骤",
+                desc_en: "Use scrap paper to avoid mistakes.",
+                desc_cn: "用草稿纸算，思路更清晰。",
+                icon: "✏️",
+                color: "#FFEDD5",
+                extra: ["Step 1", "Step 2", "Done ✅"]
+            },
+            {
+                category: "Stay Calm 保持放松",
+                en: "You are Amazing!",
+                cn: "你最棒了！",
+                desc_en: "Sleep well, eat breakfast, and stay calm.",
+                desc_cn: "睡个好觉，吃饱早餐。这只是个小测试！",
+                icon: "🍓",
+                color: "#FCE7F3", // Pink
+                extra: ["Sleep 💤", "Breakfast 🍳", "Confidence 💪"]
+            }
+        ];
+
+        let currentIndex = 0;
+
+        function updateSlide() {
+            const slide = slides[currentIndex];
+            const deck = document.getElementById('deck');
+            const contentBox = document.getElementById('content-box');
+            
+            // Update Colors & Background
+            deck.style.backgroundColor = slide.color;
+            
+            // Update Text
+            document.getElementById('category-badge').innerText = slide.category;
+            document.getElementById('page-counter').innerText = `${currentIndex + 1} / ${slides.length}`;
+            document.getElementById('icon-container').innerText = slide.icon;
+            document.getElementById('title-en').innerText = slide.en;
+            document.getElementById('title-cn').innerText = slide.cn;
+            document.getElementById('desc-en').innerText = slide.desc_en;
+            document.getElementById('desc-cn').innerText = slide.desc_cn;
+            document.getElementById('next-btn-text').innerText = currentIndex === slides.length - 1 ? "FINISH" : "NEXT";
+
+            // Update Extra Content (Tags/Pills)
+            const extraContainer = document.getElementById('extra-content');
+            extraContainer.innerHTML = '';
+            slide.extra.forEach(item => {
+                const span = document.createElement('span');
+                span.className = "bg-white/80 px-4 py-2 rounded-2xl shadow-sm font-bold text-gray-700 animate-bounce";
+                span.innerText = item;
+                extraContainer.appendChild(span);
+            });
+
+            // Update Progress Dots
+            const dotsContainer = document.getElementById('dots');
+            dotsContainer.innerHTML = '';
+            slides.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = `h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'w-8 bg-gray-800' : 'w-2 bg-gray-400/50'}`;
+                dotsContainer.appendChild(dot);
+            });
+
+            // Trigger Animation
+            contentBox.classList.remove('slide-enter');
+            void contentBox.offsetWidth; // Trigger reflow
+            contentBox.classList.add('slide-enter');
+        }
+
+        function nextSlide() {
+            if (currentIndex < slides.length - 1) {
+                currentIndex++;
+                updateSlide();
+            } else {
+                alert("Good luck in NAPLAN! You will do great! 🎉");
+            }
+        }
+
+        function prevSlide() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlide();
+            }
+        }
+
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+</html>
