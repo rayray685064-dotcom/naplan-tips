@@ -1,238 +1,314 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAPLAN Kids Tips - Chelsey & Candice</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Quicksand', sans-serif; }
-        .slide-enter { animation: slideIn 0.5s ease-out forwards; }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .bg-pattern {
-            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NAPLAN Kids Tips - Chelsey & Candice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .slide-enter {
+      animation: slideIn 0.45s ease-out forwards;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .bg-pattern {
+      background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .pill {
+      animation: floatIn 0.35s ease-out forwards;
+    }
+
+    @keyframes floatIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 <body class="bg-gray-100 bg-pattern min-h-screen flex items-center justify-center p-4">
 
-    <div id="deck" class="w-full max-w-4xl min-h-[550px] rounded-[2.5rem] shadow-2xl transition-all duration-500 flex flex-col overflow-hidden relative border-8 border-white">
-        
-        <div class="p-6 flex justify-between items-center bg-white/40 backdrop-blur-sm">
-            <span id="category-badge" class="px-5 py-1.5 bg-white rounded-full text-sm font-bold tracking-widest uppercase shadow-sm border border-gray-100">
-                LOADING...
-            </span>
-            <span id="page-counter" class="text-sm font-bold text-gray-400">0 / 0</span>
-        </div>
-
-        <div class="flex-1 flex flex-col items-center justify-center text-center px-8 pb-12">
-            <div id="icon-container" class="text-7xl mb-6 transform transition-transform hover:scale-110 cursor-pointer">
-                🚀
-            </div>
-            
-            <div id="content-box" class="slide-enter">
-                <h1 id="title-en" class="text-4xl md:text-5xl font-black mb-2 text-gray-900 leading-tight">Title English</h1>
-                <h2 id="title-cn" class="text-3xl md:text-4xl font-bold mb-8 text-blue-600">中文标题</h2>
-
-                <div class="max-w-2xl mx-auto space-y-4">
-                    <p id="desc-en" class="text-xl md:text-2xl font-medium text-gray-800 leading-relaxed"></p>
-                    <p id="desc-cn" class="text-lg md:text-xl text-gray-500"></p>
-                    
-                    <div id="extra-content" class="pt-6 flex flex-wrap justify-center gap-3"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="p-8 flex justify-between items-center bg-white/20 backdrop-blur-md">
-            <button onclick="prevSlide()" class="p-4 rounded-full bg-white/50 hover:bg-white transition-all shadow-md group">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-            
-            <div id="dots" class="hidden md:flex gap-2"></div>
-
-            <button onclick="nextSlide()" class="flex items-center gap-3 bg-gray-900 text-white px-10 py-4 rounded-3xl font-bold hover:bg-black transition-all shadow-xl hover:scale-105 active:scale-95">
-                <span id="next-btn-text">NEXT</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
-        </div>
+  <div
+    id="deck"
+    class="w-full max-w-4xl min-h-[600px] rounded-[2.5rem] shadow-2xl transition-all duration-500 flex flex-col overflow-hidden relative border-8 border-white"
+  >
+    <div class="p-6 flex justify-between items-center bg-white/40 backdrop-blur-sm">
+      <span
+        id="category-badge"
+        class="px-5 py-1.5 bg-white rounded-full text-sm font-bold tracking-widest shadow-sm border border-gray-100 text-gray-700"
+      >
+        LOADING...
+      </span>
+      <span id="page-counter" class="text-sm font-bold text-gray-500">0 / 0</span>
     </div>
 
-    <script>
-        const slides = [
-            {
-                category: "Welcome 欢迎",
-                en: "Super NAPLAN Tips!",
-                cn: "NAPLAN 考试小秘籍",
-                desc_en: "Let's learn how to do our best today!",
-                desc_cn: "Chelsey & Candice，让我们一起加油！",
-                icon: "🌟",
-                color: "#FEF3C7", // Yellow
-                extra: ["Ready?", "Go!"]
-            },
-            {
-                category: "Writing 写作",
-                en: "Plan First",
-                cn: "写作前先构思",
-                desc_en: "Spend 5 minutes planning your ideas.",
-                desc_cn: "想好你的：开头、中间、结尾。",
-                icon: "📝",
-                color: "#DBEAFE", // Blue
-                extra: ["🏠 Beginning", "📖 Middle", "🏁 Ending"]
-            },
-            {
-                category: "Writing 写作",
-                en: "Strong Vocabulary",
-                cn: "使用生动的词汇",
-                desc_en: "Better words give you higher marks!",
-                desc_cn: "用更高级的词，让文章变精彩。",
-                icon: "🌈",
-                color: "#DBEAFE",
-                extra: ["Big ➔ Gigantic ✨", "Good ➔ Fantastic ✨"]
-            },
-            {
-                category: "Writing 写作",
-                en: "Check Your Work",
-                cn: "最后 5 分钟检查",
-                desc_en: "Look for spelling and full stops.",
-                desc_cn: "检查拼写、大写字母和句号。",
-                icon: "🔍",
-                color: "#D1FAE5", // Green
-                extra: ["Spelling", "A B C", ". ? !"]
-            },
-            {
-                category: "Reading 阅读",
-                en: "Questions First",
-                cn: "先看题目，再看文章",
-                desc_en: "It tells you what information to look for.",
-                desc_cn: "带着问题去找答案，速度更快！",
-                icon: "📖",
-                color: "#ECFDF5", // Emerald
-                extra: ["Read Qs ➔ Read Text"]
-            },
-            {
-                category: "Reading 阅读",
-                en: "Find Evidence",
-                cn: "在文章里找证据",
-                desc_en: "Answers are usually in the text.",
-                desc_cn: "重点看：标题、第一段、最后一段。",
-                icon: "📍",
-                color: "#ECFDF5",
-                extra: ["Title", "First Sentence", "Last Sentence"]
-            },
-            {
-                category: "Grammar 语法",
-                en: "Listen in Your Head",
-                cn: "在心里读一遍",
-                desc_en: "Your ear can often hear mistakes.",
-                desc_cn: "读出声（在心里），错误藏不住。",
-                icon: "🎧",
-                color: "#F3E8FF", // Purple
-                extra: ["Does it sound right?"]
-            },
-            {
-                category: "Numeracy 数学",
-                en: "Read Twice",
-                cn: "题目读两遍",
-                desc_en: "Look for key words like Least, Total, Difference.",
-                desc_cn: "别粗心！圈出关键词。",
-                icon: "🔢",
-                color: "#FFEDD5", // Orange
-                extra: ["Least (最少)", "Total (总数)", "Diff (差)"]
-            },
-            {
-                category: "Numeracy 数学",
-                en: "Show Your Thinking",
-                cn: "写出计算步骤",
-                desc_en: "Use scrap paper to avoid mistakes.",
-                desc_cn: "用草稿纸算，思路更清晰。",
-                icon: "✏️",
-                color: "#FFEDD5",
-                extra: ["Step 1", "Step 2", "Done ✅"]
-            },
-            {
-                category: "Stay Calm 保持放松",
-                en: "You are Amazing!",
-                cn: "你最棒了！",
-                desc_en: "Sleep well, eat breakfast, and stay calm.",
-                desc_cn: "睡个好觉，吃饱早餐。这只是个小测试！",
-                icon: "🍓",
-                color: "#FCE7F3", // Pink
-                extra: ["Sleep 💤", "Breakfast 🍳", "Confidence 💪"]
-            }
-        ];
+    <div class="flex-1 flex flex-col items-center justify-center text-center px-8 py-8">
+      <div
+        id="icon-container"
+        class="text-7xl md:text-8xl mb-6 transform transition-transform duration-300 hover:scale-110 cursor-pointer"
+      >
+        🚀
+      </div>
 
-        let currentIndex = 0;
+      <div id="content-box" class="slide-enter w-full">
+        <h1
+          id="title-en"
+          class="text-4xl md:text-5xl font-extrabold mb-2 text-gray-900 leading-tight"
+        >
+          Title English
+        </h1>
 
-        function updateSlide() {
-            const slide = slides[currentIndex];
-            const deck = document.getElementById('deck');
-            const contentBox = document.getElementById('content-box');
-            
-            // Update Colors & Background
-            deck.style.backgroundColor = slide.color;
-            
-            // Update Text
-            document.getElementById('category-badge').innerText = slide.category;
-            document.getElementById('page-counter').innerText = `${currentIndex + 1} / ${slides.length}`;
-            document.getElementById('icon-container').innerText = slide.icon;
-            document.getElementById('title-en').innerText = slide.en;
-            document.getElementById('title-cn').innerText = slide.cn;
-            document.getElementById('desc-en').innerText = slide.desc_en;
-            document.getElementById('desc-cn').innerText = slide.desc_cn;
-            document.getElementById('next-btn-text').innerText = currentIndex === slides.length - 1 ? "FINISH" : "NEXT";
+        <h2
+          id="title-cn"
+          class="text-2xl md:text-4xl font-bold mb-8 text-blue-600"
+        >
+          中文标题
+        </h2>
 
-            // Update Extra Content (Tags/Pills)
-            const extraContainer = document.getElementById('extra-content');
-            extraContainer.innerHTML = '';
-            slide.extra.forEach(item => {
-                const span = document.createElement('span');
-                span.className = "bg-white/80 px-4 py-2 rounded-2xl shadow-sm font-bold text-gray-700 animate-bounce";
-                span.innerText = item;
-                extraContainer.appendChild(span);
-            });
+        <div class="max-w-2xl mx-auto space-y-4">
+          <p id="desc-en" class="text-xl md:text-2xl font-medium text-gray-800 leading-relaxed"></p>
+          <p id="desc-cn" class="text-lg md:text-xl text-gray-600 leading-relaxed"></p>
 
-            // Update Progress Dots
-            const dotsContainer = document.getElementById('dots');
-            dotsContainer.innerHTML = '';
-            slides.forEach((_, i) => {
-                const dot = document.createElement('div');
-                dot.className = `h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'w-8 bg-gray-800' : 'w-2 bg-gray-400/50'}`;
-                dotsContainer.appendChild(dot);
-            });
+          <div
+            id="extra-content"
+            class="pt-6 flex flex-wrap justify-center gap-3"
+          ></div>
+        </div>
+      </div>
+    </div>
 
-            // Trigger Animation
-            contentBox.classList.remove('slide-enter');
-            void contentBox.offsetWidth; // Trigger reflow
-            contentBox.classList.add('slide-enter');
-        }
+    <div class="p-6 md:p-8 flex justify-between items-center bg-white/20 backdrop-blur-md gap-4">
+      <button
+        id="prev-btn"
+        type="button"
+        onclick="prevSlide()"
+        class="p-4 rounded-full bg-white/60 hover:bg-white transition-all shadow-md disabled:opacity-40 disabled:cursor-not-allowed group"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
 
-        function nextSlide() {
-            if (currentIndex < slides.length - 1) {
-                currentIndex++;
-                updateSlide();
-            } else {
-                alert("Good luck in NAPLAN! You will do great! 🎉");
-            }
-        }
+      <div id="dots" class="hidden md:flex gap-2 flex-1 justify-center"></div>
 
-        function prevSlide() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateSlide();
-            }
-        }
+      <button
+        id="next-btn"
+        type="button"
+        onclick="nextSlide()"
+        class="flex items-center gap-3 bg-gray-900 text-white px-8 md:px-10 py-4 rounded-3xl font-bold hover:bg-black transition-all shadow-xl hover:scale-105 active:scale-95"
+      >
+        <span id="next-btn-text">NEXT</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
 
-        // Initialize
+  <script>
+    const slides = [
+      {
+        category: "Welcome 欢迎",
+        en: "Super NAPLAN Tips!",
+        cn: "NAPLAN 考试小秘籍",
+        desc_en: "Let's learn how to do our best today!",
+        desc_cn: "Chelsey & Candice，让我们一起加油！",
+        icon: "🌟",
+        color: "#FEF3C7",
+        extra: ["Ready?", "Go!"]
+      },
+      {
+        category: "Writing 写作",
+        en: "Plan First",
+        cn: "写作前先构思",
+        desc_en: "Spend 5 minutes planning your ideas.",
+        desc_cn: "想好你的：开头、中间、结尾。",
+        icon: "📝",
+        color: "#DBEAFE",
+        extra: ["🏠 Beginning", "📖 Middle", "🏁 Ending"]
+      },
+      {
+        category: "Writing 写作",
+        en: "Strong Vocabulary",
+        cn: "使用生动的词汇",
+        desc_en: "Better words give you higher marks!",
+        desc_cn: "用更高级的词，让文章变精彩。",
+        icon: "🌈",
+        color: "#DBEAFE",
+        extra: ["Big ➜ Gigantic ✨", "Good ➜ Fantastic ✨"]
+      },
+      {
+        category: "Writing 写作",
+        en: "Check Your Work",
+        cn: "最后 5 分钟检查",
+        desc_en: "Look for spelling and full stops.",
+        desc_cn: "检查拼写、大写字母和句号。",
+        icon: "🔍",
+        color: "#D1FAE5",
+        extra: ["Spelling", "A B C", ". ? !"]
+      },
+      {
+        category: "Reading 阅读",
+        en: "Questions First",
+        cn: "先看题目，再看文章",
+        desc_en: "It tells you what information to look for.",
+        desc_cn: "带着问题去找答案，速度更快！",
+        icon: "📖",
+        color: "#ECFDF5",
+        extra: ["Read Qs ➜ Read Text"]
+      },
+      {
+        category: "Reading 阅读",
+        en: "Find Evidence",
+        cn: "在文章里找证据",
+        desc_en: "Answers are usually in the text.",
+        desc_cn: "重点看：标题、第一段、最后一段。",
+        icon: "📍",
+        color: "#ECFDF5",
+        extra: ["Title", "First Sentence", "Last Sentence"]
+      },
+      {
+        category: "Grammar 语法",
+        en: "Listen in Your Head",
+        cn: "在心里读一遍",
+        desc_en: "Your ear can often hear mistakes.",
+        desc_cn: "在心里读一遍，错误更容易发现。",
+        icon: "🎧",
+        color: "#F3E8FF",
+        extra: ["Does it sound right?"]
+      },
+      {
+        category: "Numeracy 数学",
+        en: "Read Twice",
+        cn: "题目读两遍",
+        desc_en: "Look for key words like Least, Total, Difference.",
+        desc_cn: "别粗心，先圈出关键词。",
+        icon: "🔢",
+        color: "#FFEDD5",
+        extra: ["Least 最少", "Total 总数", "Difference 差"]
+      },
+      {
+        category: "Numeracy 数学",
+        en: "Show Your Thinking",
+        cn: "写出计算步骤",
+        desc_en: "Use scrap paper to avoid mistakes.",
+        desc_cn: "用草稿纸一步一步算，思路更清晰。",
+        icon: "✏️",
+        color: "#FFEDD5",
+        extra: ["Step 1", "Step 2", "Done ✅"]
+      },
+      {
+        category: "Stay Calm 保持放松",
+        en: "You are Amazing!",
+        cn: "你最棒了！",
+        desc_en: "Sleep well, eat breakfast, and stay calm.",
+        desc_cn: "睡个好觉，吃好早餐，安心答题就行。",
+        icon: "🍓",
+        color: "#FCE7F3",
+        extra: ["Sleep 💤", "Breakfast 🍳", "Confidence 💪"]
+      }
+    ];
+
+    let currentIndex = 0;
+
+    function updateSlide() {
+      const slide = slides[currentIndex];
+      const deck = document.getElementById("deck");
+      const contentBox = document.getElementById("content-box");
+      const extraContainer = document.getElementById("extra-content");
+      const dotsContainer = document.getElementById("dots");
+      const prevBtn = document.getElementById("prev-btn");
+      const nextBtnText = document.getElementById("next-btn-text");
+
+      deck.style.backgroundColor = slide.color;
+
+      document.getElementById("category-badge").innerText = slide.category;
+      document.getElementById("page-counter").innerText = `${currentIndex + 1} / ${slides.length}`;
+      document.getElementById("icon-container").innerText = slide.icon;
+      document.getElementById("title-en").innerText = slide.en;
+      document.getElementById("title-cn").innerText = slide.cn;
+      document.getElementById("desc-en").innerText = slide.desc_en;
+      document.getElementById("desc-cn").innerText = slide.desc_cn;
+
+      nextBtnText.innerText = currentIndex === slides.length - 1 ? "FINISH" : "NEXT";
+      prevBtn.disabled = currentIndex === 0;
+
+      extraContainer.innerHTML = "";
+      slide.extra.forEach((item, i) => {
+        const span = document.createElement("span");
+        span.className = "pill bg-white/80 px-4 py-2 rounded-2xl shadow-sm font-bold text-gray-700";
+        span.style.animationDelay = `${i * 0.06}s`;
+        span.innerText = item;
+        extraContainer.appendChild(span);
+      });
+
+      dotsContainer.innerHTML = "";
+      slides.forEach((_, i) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.setAttribute("aria-label", `Go to slide ${i + 1}`);
+        button.className = i === currentIndex
+          ? "h-2 w-8 rounded-full bg-gray-800 transition-all duration-300"
+          : "h-2 w-2 rounded-full bg-gray-400/50 hover:bg-gray-500 transition-all duration-300";
+        button.onclick = () => {
+          currentIndex = i;
+          updateSlide();
+        };
+        dotsContainer.appendChild(button);
+      });
+
+      contentBox.classList.remove("slide-enter");
+      void contentBox.offsetWidth;
+      contentBox.classList.add("slide-enter");
+    }
+
+    function nextSlide() {
+      if (currentIndex < slides.length - 1) {
+        currentIndex++;
         updateSlide();
-    </script>
+      } else {
+        alert("Good luck in NAPLAN! You will do great! 🎉");
+      }
+    }
+
+    function prevSlide() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateSlide();
+      }
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") {
+        nextSlide();
+      }
+      if (e.key === "ArrowLeft") {
+        prevSlide();
+      }
+    });
+
+    updateSlide();
+  </script>
 </body>
 </html>
